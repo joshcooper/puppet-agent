@@ -9,6 +9,10 @@ The Puppet Agent
  * License
  * Maintainers
 
+WARNING
+---
+The cinext branch is for test purposes only. Do not target PRs to this branch.
+
 Overview
 ---
 The puppet agent is a collection of software that is required for puppet and

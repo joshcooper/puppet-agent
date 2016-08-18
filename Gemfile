@@ -12,6 +12,8 @@ end
 
 gem 'vanagon', *vanagon_location_for(ENV['VANAGON_LOCATION'] || '0.7.1')
 gem 'packaging', '~> 0.4', :github => 'puppetlabs/packaging'
+gem "beaker-hostgenerator", :github => 'joshcooper/beaker-hostgenerator', :branch => 'cinext' # *location_for(ENV['BEAKER_HOSTGENERATOR_VERSION'] || "~> 0.3")
+
 gem 'rake'
 gem 'json'
 gem 'rubocop', "~> 0.34.2"

@@ -1,7 +1,6 @@
 vendor/*
 output/*
 .bundle
-Gemfile.lock
 Gemfile.local
 *.log
 ext/build_metadata.*

@@ -137,7 +137,7 @@ project "puppet-agent" do |proj|
   # Set the $DEV_BUILD environment variable to leave headers in place.
   proj.component "cleanup"
 
-  proj.component "pl-ruby-patch"
+#  proj.component "pl-ruby-patch"
 
   unless ENV['DEV_BUILD'].to_s.empty?
     proj.settings[:dev_build] = true

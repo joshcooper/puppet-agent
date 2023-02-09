@@ -51,7 +51,7 @@ version_data="{
                 \"puppetdb\":\"$puppetdb_version\"
               }"
 echo $version_data > $versions_file
-curl -T $versions_file "https://artifactory.delivery.puppetlabs.net/artifactory/scratchpad__local/puppet-agent-version-compatibility/${versions_file}"
+#curl -sT $versions_file "https://artifactory.delivery.puppetlabs.net/artifactory/scratchpad__local/puppet-agent-version-compatibility/${versions_file}"
 rm $versions_file
 
 echo

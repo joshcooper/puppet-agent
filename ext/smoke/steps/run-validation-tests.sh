@@ -39,7 +39,7 @@ function run_dataset_count_test() {
   endpoint="$2"
 
   echo "### TEST: ${test_name} ###"
-  result=`on_master "curl -f -G http://localhost:8080/pdb/query/v4/${endpoint} | /bin/jq \". | length\""`
+  result=`on_master "curl -sf -G http://localhost:8080/pdb/query/v4/${endpoint} | /bin/jq \". | length\""`
   echo "Result is: ${result}"
   if [[ "${result}" == "2" || "${result}" == "3" ]]; then
     echo "### RESULT: SUCCESS ###"
@@ -73,7 +73,7 @@ on_master "wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux
 ### TESTS ###
 
 echo "### TEST: Query PuppetDB for external node data ###"
-result=`on_master "curl -f -X POST http://localhost:8080/pdb/query/v4/nodes -H 'Content-Type:application/json' -d '{\"query\":[\"=\",\"certname\",\"${agent_vm}\"]}' | /bin/jq ."`
+result=`on_master "curl -sf -X POST http://localhost:8080/pdb/query/v4/nodes -H 'Content-Type:application/json' -d '{\"query\":[\"=\",\"certname\",\"${agent_vm}\"]}' | /bin/jq ."`
 if [[ "${result}" =~ ${agent_vm} ]]; then
   echo "### RESULT: SUCCESS ###"
 else
@@ -90,7 +90,7 @@ on_agent "echo foo=bar > /opt/puppetlabs/facter/facts.d/test.txt" "true"
 set +e
 on_agent "puppet agent -t" "true"
 set -e
-result=`on_master "curl -f -X POST http://localhost:8080/pdb/query/v4/facts/foo -H 'Content-Type:application/json' -d '{\"query\":[\"=\",\"certname\",\"${agent_vm}\"]}' | /bin/jq ."`
+result=`on_master "curl -sf -X POST http://localhost:8080/pdb/query/v4/facts/foo -H 'Content-Type:application/json' -d '{\"query\":[\"=\",\"certname\",\"${agent_vm}\"]}' | /bin/jq ."`
 if [[ "${result}" =~ ${agent_vm} ]]; then
   echo "### RESULT: SUCCESS ###"
 else
@@ -107,7 +107,7 @@ run_dataset_count_test "Ensure catalog count is equal to number of agents" "cata
 exitcode=0
 for host in ${master_vm} ${agent_vm}; do
   echo "### TEST: Ensure that reports are present for ${host} ###"
-  result=`on_master "curl -f -X POST http://localhost:8080/pdb/query/v4/reports -H 'Content-Type:application/json' -d '{\"query\":[\"=\",\"certname\",\"${host}\"]}' | jq \". | length\""`
+  result=`on_master "curl -sf -X POST http://localhost:8080/pdb/query/v4/reports -H 'Content-Type:application/json' -d '{\"query\":[\"=\",\"certname\",\"${host}\"]}' | jq \". | length\""`
   echo ${result}
   if [[ "${result}" -gt 0 ]]; then
     echo "### RESULT: SUCCESS ###"

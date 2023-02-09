@@ -20,9 +20,9 @@ function on_host() {
   echo $identity
 
   if [[ -z "${suppress}" || "${suppress}" == "false" ]]; then
-    ssh $identity -oStrictHostKeyChecking=no root@${host} "${cmd}" 2>/dev/null
+    ssh $identity -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oLogLevel=ERROR root@${host} "${cmd}"
   else
-    ssh $identity -oStrictHostKeyChecking=no root@${host} "${cmd}" 2>/dev/null 1>/dev/null
+    ssh $identity -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -oLogLevel=ERROR root@${host} "${cmd}"
   fi
 }
 
@@ -199,8 +199,8 @@ function install_puppetdb_from_package() {
   # Install the PuppetDB package
   echo "STEP: Installing the PuppetDB package ..."
   if [[ "$type" = "dev" ]]; then
-    on_master ${master_vm} "curl -f -O http://builds.delivery.puppetlabs.net/puppetdb/${puppetdb_version}/artifacts/el/7/${collection}/x86_64/puppetdb-termini-${puppetdb_version}-1.el7.noarch.rpm"
-    on_master ${master_vm} "curl -f -O http://builds.delivery.puppetlabs.net/puppetdb/${puppetdb_version}/artifacts/el/7/${collection}/x86_64/puppetdb-${puppetdb_version}-1.el7.noarch.rpm"
+    on_master ${master_vm} "curl -sf -O http://builds.delivery.puppetlabs.net/puppetdb/${puppetdb_version}/artifacts/el/7/${collection}/x86_64/puppetdb-termini-${puppetdb_version}-1.el7.noarch.rpm"
+    on_master ${master_vm} "curl -sf -O http://builds.delivery.puppetlabs.net/puppetdb/${puppetdb_version}/artifacts/el/7/${collection}/x86_64/puppetdb-${puppetdb_version}-1.el7.noarch.rpm"
     on_master ${master_vm} "rpm -ivh puppetdb-${puppetdb_version}-1.el7.noarch.rpm puppetdb-termini-${puppetdb_version}-1.el7.noarch.rpm"
   elif [[ "$type" = "repo" ]]; then
     on_master ${master_vm} "rpm --quiet --query puppetdb-${puppetdb_version} || yum install -y puppetdb-${puppetdb_version}"

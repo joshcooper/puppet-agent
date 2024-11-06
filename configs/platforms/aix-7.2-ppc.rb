@@ -20,4 +20,5 @@ platform "aix-7.2-ppc" do |plat|
   #                                         Sean P. McD.
   plat.install_build_dependencies_with "rpm -Uvh --replacepkgs --force "
   plat.vmpooler_template "aix-7.2-power"
+  plat.output_dir '.'
 end

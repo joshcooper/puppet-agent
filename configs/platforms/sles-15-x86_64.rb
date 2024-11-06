@@ -7,4 +7,5 @@ platform "sles-15-x86_64" do |plat|
   plat.provision_with "zypper -n --no-gpg-checks install -y #{packages.join(' ')}"
   plat.install_build_dependencies_with "zypper -n --no-gpg-checks install -y"
   plat.vmpooler_template "sles-15-x86_64"
+  plat.output_dir '.'
 end
